@@ -10,7 +10,8 @@
   },
   "scripts": {
     "inspect:exe": "node tools/inspect-executable.mjs",
+    "inspect:cif": "node tools/inspect-cif.mjs",
     "test": "node --test",
-    "check": "node --check tools/inspect-executable.mjs && node --check src/binary-reader.mjs && node --check src/archive-parser.mjs && node --check src/index.mjs && node --check tests/inspect-executable.test.mjs && node --check tests/binary-reader.test.mjs"
+    "check": "node --check tools/inspect-executable.mjs && node --check tools/inspect-cif.mjs && node --check src/binary-reader.mjs && node --check src/archive-parser.mjs && node --check src/cif-parser.mjs && node --check src/cid-parser.mjs && node --check src/index.mjs && node --check tests/inspect-executable.test.mjs && node --check tests/binary-reader.test.mjs && node --check tests/cif-parser.test.mjs"
   }
 }

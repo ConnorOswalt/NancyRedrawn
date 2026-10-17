@@ -33,6 +33,7 @@ dependencies; no package installation is needed.
 npm run check
 npm test
 npm run inspect:exe -- "/absolute/path/to/your/legally-obtained/Game.exe"
+npm run inspect:cif -- "/absolute/path/to/your/CIFTREE.DAT"
 ```
 
 The inspector reads the supplied file without executing or modifying it. It

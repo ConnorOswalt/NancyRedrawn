@@ -39,6 +39,35 @@ All proprietary data and private paths remain local and untracked.
 
 ---
 
+## Entry 002: CIF Tree Container Format Specification (.DAT, .CAL)
+
+- **Date:** 2026-10-17
+- **Question:** How are assets stored and indexed in Nancy Drew 13's `.DAT` (e.g. `CIFTREE.DAT`, `Promotree.DAT`) and `.CAL` character animation files?
+- **Environment:** Linux x86_64, Node.js v24, Python 3
+- **Method:**
+  1. Unpacked NSIS distribution files into local isolated storage.
+  2. Analyzed binary structure of `CIFTREE.DAT`, `Promotree.DAT`, and `CharleenaBody.CAL`.
+  3. Reverse-engineered header, index tables, record layout, and data offsets.
+- **Specification Observations:**
+  - **Magic Header (24 bytes):** ASCII `"CIF TREE HerInteractive\0"`.
+  - **Version (4 bytes):** uint16le major (`0x0002`), uint16le minor (`0x0002`).
+  - **Entry Count (4 bytes):** uint32le count. In `.CAL` files, bit 24 is set (`count | 0x01000000`) signaling a 1024-entry lookup table instead of the standard 1118-entry table.
+  - **Node Lookup Table:** Array of uint16le values. Size is 2048 bytes (1024 shorts) for CAL variant, or 2236 bytes (1118 shorts) for standard DAT.
+  - **Records Table:** Immediately follows the lookup table (offset 2080 for CAL, 2268 for DAT). Each entry is a fixed 94-byte record:
+    - `0x00 - 0x1F` (32 bytes): ASCII entry name (null-terminated).
+    - `0x20 - 0x22` (3 bytes): Record flags / node type.
+    - `0x23 - 0x26` (4 bytes, uint32le): Absolute file offset of payload in the container.
+    - `0x27 - 0x58` (50 bytes): Internal coordinates, node properties, and animation metadata.
+    - `0x59 - 0x5C` (4 bytes, uint32le): Payload size / byte length.
+    - `0x5D - 0x5E` (2 bytes): Trailing flags.
+  - **Payload Data:** Contiguous binary chunks starting immediately after the records table. Empty/group node headers have size 0 and share offset with child entries.
+- **Game Identity (.cid):**
+  - Plaintext CRLF text format containing Game ID, Title, Series Name, and Publisher.
+- **Confidence:** Confirmed (10/10). Successfully validated across all 2,369 records in `CIFTREE.DAT`, 17 records in `Promotree.DAT`, and 148 records in `CharleenaBody.CAL`.
+- **Implementation:** Shipped in [src/cif-parser.mjs](/home/ozzy/Documents/VSCode Repositories/NancyRedrawn/src/cif-parser.mjs) and [src/cid-parser.mjs](/home/ozzy/Documents/VSCode Repositories/NancyRedrawn/src/cid-parser.mjs).
+
+---
+
 ## Finding template
 
 - **Date:**

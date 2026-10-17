@@ -26,6 +26,14 @@
       "args": ["tools/inspect-executable.mjs", "${input:executablePath}"],
       "options": { "cwd": "${workspaceFolder}" },
       "problemMatcher": []
+    },
+    {
+      "label": "NancyRedrawn: inspect CIF tree container",
+      "type": "process",
+      "command": "node",
+      "args": ["tools/inspect-cif.mjs", "${input:cifPath}"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
     }
   ],
   "inputs": [
@@ -33,6 +41,11 @@
       "id": "executablePath",
       "type": "promptString",
       "description": "Path to a legally obtained local executable (read only)"
+    },
+    {
+      "id": "cifPath",
+      "type": "promptString",
+      "description": "Path to a local CIF container (.DAT, .CAL)"
     }
   ]
 }

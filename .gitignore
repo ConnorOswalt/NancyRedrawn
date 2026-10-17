@@ -38,6 +38,10 @@
 **/*.pem
 **/*.key
 **/*~
+**/*.gpr
+**/*.rep/
+**/*.lock
+**/*.lock_db
 .vscode/*
 !.vscode/tasks.json
 .github/*
