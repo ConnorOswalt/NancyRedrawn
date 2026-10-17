@@ -1,0 +1,38 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "NancyRedrawn: check tooling",
+      "type": "process",
+      "command": "node",
+      "args": ["--run", "check"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "group": "build"
+    },
+    {
+      "label": "NancyRedrawn: test tooling",
+      "type": "process",
+      "command": "node",
+      "args": ["--test"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": [],
+      "group": "test"
+    },
+    {
+      "label": "NancyRedrawn: inspect local executable",
+      "type": "process",
+      "command": "node",
+      "args": ["tools/inspect-executable.mjs", "${input:executablePath}"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    }
+  ],
+  "inputs": [
+    {
+      "id": "executablePath",
+      "type": "promptString",
+      "description": "Path to a legally obtained local executable (read only)"
+    }
+  ]
+}

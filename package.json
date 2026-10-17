@@ -1,0 +1,16 @@
+{
+  "name": "nancy-redrawn",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Original research and local inspection tools for Nancy Drew 13 modding.",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "inspect:exe": "node tools/inspect-executable.mjs",
+    "test": "node --test",
+    "check": "node --check tools/inspect-executable.mjs && node --check src/binary-reader.mjs && node --check src/archive-parser.mjs && node --check src/index.mjs && node --check tests/inspect-executable.test.mjs && node --check tests/binary-reader.test.mjs"
+  }
+}
