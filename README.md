@@ -10,6 +10,11 @@ infrastructure, a read-only executable inspector, and a reproducible research
 process. It does **not** yet contain a decompiler, extracted game code, a
 replacement engine, or a working mod.
 
+The [local AI analysis framework](docs/local-agent.md) connects bounded Ghidra
+exports to your homelab Ollama server. It keeps a resumable proposal ledger and
+applies only explicitly approved function renames/comments. Ghidra supplies the
+decompiler; model output is a hypothesis, not recovered original source.
+
 ## Scope and boundaries
 
 - Use a legally obtained copy and check the laws and license terms that apply
@@ -92,6 +97,22 @@ review: copied game content inside an allowed directory can still be staged.
 
 See [the research workflow](docs/research-workflow.md) and
 [the research log](docs/research-log.md).
+
+## Local AI quick start
+
+```sh
+export GHIDRA_HOME="$HOME/Downloads/ghidra_12.1.4_PUBLIC"
+export OLLAMA_HOST="http://mentat:11484"
+export OLLAMA_MODEL="qwen2.5-coder:14b"
+npm run agent -- doctor
+```
+
+Follow [the full guide](docs/local-agent.md) to import once, export a bounded
+function slice, analyze, review and explicitly approve database annotations.
+The homelab model must already be installed. No game binaries or decompiled
+content are uploaded to Git or a cloud inference service by these commands.
+The existing CIF parser is experimental; its table/count interpretation is not
+yet a verified foundation for automatic typing or repacking.
 
 ## Preparing the first GitHub commit
 

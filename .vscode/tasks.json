@@ -28,6 +28,38 @@
       "problemMatcher": []
     },
     {
+      "label": "NancyRedrawn: agent prerequisites",
+      "type": "process",
+      "command": "node",
+      "args": ["tools/agent/cli.mjs", "doctor"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "NancyRedrawn: export agent evidence",
+      "type": "process",
+      "command": "node",
+      "args": ["tools/agent/cli.mjs", "export", "--limit", "20"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "NancyRedrawn: analyze five functions",
+      "type": "process",
+      "command": "node",
+      "args": ["tools/agent/cli.mjs", "analyze", "--limit", "5"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
+      "label": "NancyRedrawn: agent status",
+      "type": "process",
+      "command": "node",
+      "args": ["tools/agent/cli.mjs", "status"],
+      "options": { "cwd": "${workspaceFolder}" },
+      "problemMatcher": []
+    },
+    {
       "label": "NancyRedrawn: inspect CIF tree container",
       "type": "process",
       "command": "node",

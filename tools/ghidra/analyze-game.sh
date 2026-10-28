@@ -11,7 +11,7 @@ if [ -z "${GHIDRA_HOME}" ]; then
     ANALYZE_HEADLESS="$(command -v analyzeHeadless)"
   else
     echo "Error: GHIDRA_HOME is not set and analyzeHeadless is not in PATH."
-    echo "Please set GHIDRA_HOME=/path/to/ghidra or install Ghidra (JDK 17+ recommended)."
+    echo "Please set GHIDRA_HOME=/path/to/ghidra and use the JDK required by that release."
     exit 1
   fi
 else
@@ -20,11 +20,7 @@ fi
 
 PROJECT_DIR="${ROOT_DIR}/local-data/analysis/ghidra"
 PROJECT_NAME="NancyDrew13"
-TARGET_EXE="${ROOT_DIR}/local-data/working/game/game.exe"
-
-if [ ! -f "${TARGET_EXE}" ]; then
-  TARGET_EXE="${ROOT_DIR}/Nancy Drew 13 - Last Train to Blue Moon Canyon (2005)/No Disc Needed/Game.exe"
-fi
+TARGET_EXE="${1:-${ROOT_DIR}/local-data/working/game/game.exe}"
 
 if [ ! -f "${TARGET_EXE}" ]; then
   echo "Error: Target executable not found."
@@ -33,6 +29,11 @@ if [ ! -f "${TARGET_EXE}" ]; then
 fi
 
 mkdir -p "${PROJECT_DIR}"
+if [ -e "${PROJECT_DIR}/${PROJECT_NAME}.gpr" ] || [ -e "${PROJECT_DIR}/${PROJECT_NAME}.rep" ]; then
+  echo "Error: Project already exists; refusing to overwrite analysis."
+  echo "Use the existing project with npm run agent -- export."
+  exit 1
+fi
 
 echo "=== Running Headless Ghidra Analysis ==="
 echo "Project Directory: ${PROJECT_DIR}"
@@ -42,7 +43,6 @@ echo "Script Path:       ${SCRIPT_DIR}"
 
 "${ANALYZE_HEADLESS}" "${PROJECT_DIR}" "${PROJECT_NAME}" \
   -import "${TARGET_EXE}" \
-  -overwrite \
   -scriptPath "${SCRIPT_DIR}" \
   -postScript IdentifyEngineStrings.java
 

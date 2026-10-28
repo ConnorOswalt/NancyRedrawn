@@ -1,5 +1,13 @@
 # Research log
 
+> Correction: Entry 002's claim of complete validation is inaccurate. Earlier
+> inspection produced two invalid trailing DAT records. Its entry count,
+> lookup-table layout, payload decoding and field semantics remain hypotheses.
+> The described trailing two-byte field also extended beyond a 94-byte record;
+> only byte 0x5d remains after a four-byte length at 0x59. Do not use that entry
+> as a verified runtime structure or repacker specification. The local agent
+> exports actual decompiler evidence without relying on those inferred types.
+
 This log records verified architectural findings and format observations.
 All proprietary data and private paths remain local and untracked.
 
